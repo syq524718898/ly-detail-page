@@ -1,0 +1,63 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: page-service
+  thymeleaf:
+    cache: false
+  rabbitmq:
+    host: 192.168.130.128
+    username: leyou
+    password: leyou
+    virtual-host: /leyou
+  redis:
+    database: 0
+    # Redis服务器地址
+    host: 127.0.0.1
+    # Redis服务器连接端口
+    port: 6379
+    # 连接池最大连接数
+    jedis:
+      pool:
+        max-active: 100
+        # 连接池中的最大空闲连接
+        max-idle: 20
+        # 连接池中的最小空闲连接
+        min-idle: 5
+  # kafka
+  kafka:
+    # 指定 kafka 地址可以多个
+    bootstrap-servers:
+      - 192.168.130.128:9092
+      - 192.168.130.128:9093
+      - 192.168.130.128:9094
+    listener:
+      ack-mode: manual
+      # 消费者的配置
+    consumer:
+      # 指定默认消费者group id
+      group-id: item-update-group
+      auto-offset-reset: earliest
+      # 是否开启自动提交
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+
+
+# 禁用hystrix
+feign:
+  hystrix:
+    enabled: false
+
+ly:
+  page:
+    path: E:\javaproject\nginx-1.14.0\html\item\
